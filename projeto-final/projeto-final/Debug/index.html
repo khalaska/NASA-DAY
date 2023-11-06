@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NASA APOD com data específica</title>
+</head>
+<body>
+  <h1>NASA Astronomy Picture of the Day</h1>
+  <label for="dateInput">Selecione uma data:</label>
+  <input type="date" id="dateInput">
+  <button onclick="getAPOD()">Obter Imagem</button>
+  <div id="result"></div>
+
+  <script>
+    function getAPOD() {
+      const dateInput = document.getElementById('dateInput').value;
+      const apiKey = 'f5mjMNkNafB0Dw1z66dWjRpW7qP2wKnMJwpcFCdP'; // Substitua 'DEMO_KEY' pela sua chave de API da NASA
+
+      // Monta a URL da API com a data selecionada
+      const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=${dateInput}`;
+
+      // Faz a requisição à API
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => displayResult(data))
+        .catch(error => console.error('Erro ao obter a imagem:', error));
+    }
+
+    function displayResult(data) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `
+        <h2>${data.title}</h2>
+        <img src="${data.url}" alt="${data.title}" style="max-width: 100%;">
+        <p>${data.explanation}</p>
+      `;
+    }
+    //teste
+  </script>
+</body>
+</html>
